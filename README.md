@@ -1,9 +1,10 @@
 # webpackDemo
-Based on webpack / babel / react / less to build the basic framework
+基于webpack / babel / react / less 构建的基础Web框架
 
 ```bash
-npm start   #launch dev server
-npm run dev #launch dev server 
+#启动服务
+npm start  
 
-npm run build #build to public
+#构建应用
+npm run build 
 ```
