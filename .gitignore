@@ -61,6 +61,6 @@ typings/
 
 .DS_Store
 /public
-
+/build
 #for mac file system
 .idea
