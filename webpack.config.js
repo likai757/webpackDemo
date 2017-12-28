@@ -1,6 +1,8 @@
 const webpack = require('webpack')
 const htmlWebpackPlugin = require('html-webpack-plugin')
-module.exports = {
+const copyWebpackPlugin = require('copy-webpack-plugin')
+
+var config = {
   // devtool: 'cheap-module-source-map',
   entry: __dirname + '/app/index.js',//已多次提及的唯一入口文件
   output: {
@@ -8,6 +10,7 @@ module.exports = {
     filename: 'bundle.js'//打包后输出文件的文件名
   },
   devServer: {
+    hot: true,
     contentBase: './public',//本地服务器所加载的页面所在的目录
     historyApiFallback: true,//不跳转
     inline: true//实时刷新
@@ -43,11 +46,15 @@ module.exports = {
   },
   plugins: [
     new webpack.BannerPlugin('版权所有: Kai.Li'),
+    new webpack.HotModuleReplacementPlugin(),
     new htmlWebpackPlugin({
       PATHS: [],
       title: 'Webpack Sample Project',
       template: __dirname + '/assets/index.hbs',
       favicon: __dirname + '/assets/favicon.ico'
-    })
+    }),
+    new copyWebpackPlugin([{ from: 'assets/introduce.html' }])
   ]
 }
+
+module.exports = config
