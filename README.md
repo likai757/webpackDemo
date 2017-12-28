@@ -61,28 +61,28 @@ $ npm init -y
 ####  安装依赖
 
 ```bash
-//webpack
-$ npm install --save-dev webpack webpack-dev-server
+#webpack
+npm install --save-dev webpack webpack-dev-server
 
-//files handler plugins
-$ npm install --save-dev html-webpack-plugin 
-$ npm install --save-dev copy-webpack-plugin
+# handler plugins
+npm install --save-dev html-webpack-plugin 
+npm install --save-dev copy-webpack-plugin
 
-//html template loader
-$ npm install --save-dev mustache-loader
+# html template loader
+npm install --save-dev mustache-loader
 
-//babel loader
-$ npm install --save-dev babel-core babel-loader babel-preset-env babel-preset-react
+#babel loader
+npm install --save-dev babel-core babel-loader babel-preset-env babel-preset-react
 
-//css loader
-$ npm install --save-dev style-loader css-loader
-$ npm install --save-dev postcss-loader autoprefixer
+#css loader
+npm install --save-dev style-loader css-loader
+npm install --save-dev postcss-loader autoprefixer
 
-//hot module replacement for react
-$ npm install --save-dev babel-plugin-react-transform react-transform-hmr
+#hot module replacement for react
+npm install --save-dev babel-plugin-react-transform react-transform-hmr
 
-//react
-$ npm install --save react react-dom
+#react
+npm install --save react react-dom
 
 
 ```
