@@ -1,14 +1,3 @@
-# webpackDemo
-基于webpack / babel / react / less 构建的基础Web框架
-
-```bash
-#启动服务
-npm start  
-
-#构建应用
-npm run build 
-```
-
 ## 前言
 随着Web前端技术的不断发展，前端的用户体验及业务逻辑，变得越来越复杂繁重，然而代码量剧增，带来一个必然发展就是**模块化**。通过模块化可将问题拆解，解耦，遵循协议，分块处理。
 
@@ -61,29 +50,31 @@ $ npm init -y
 ####  安装依赖
 
 ```bash
-#webpack
-npm install --save-dev webpack webpack-dev-server
+//webpack
+$ npm install --save-dev webpack webpack-dev-server
 
-# handler plugins
-npm install --save-dev html-webpack-plugin 
-npm install --save-dev copy-webpack-plugin
+//file plugins
+$ npm install --save-dev html-webpack-plugin 
+$ npm install --save-dev copy-webpack-plugin
 
-# html template loader
-npm install --save-dev mustache-loader
+//html template loader
+$ npm install --save-dev mustache-loader
 
-#babel loader
-npm install --save-dev babel-core babel-loader babel-preset-env babel-preset-react
+//babel loader
+$ npm install --save-dev babel-core babel-loader babel-preset-env babel-preset-react
 
-#css loader
-npm install --save-dev style-loader css-loader
-npm install --save-dev postcss-loader autoprefixer
+//css loader
+$ npm install --save-dev style-loader css-loader
+$ npm install --save-dev postcss-loader autoprefixer
 
-#hot module replacement for react
-npm install --save-dev babel-plugin-react-transform react-transform-hmr
+//hot module replacement for react
+$ npm install --save-dev babel-plugin-react-transform react-transform-hmr
 
-#react
-npm install --save react react-dom
+//file loader 
+$ npm install --save-dev file-loader url-loader
 
+//react
+$ npm install --save react react-dom
 
 ```
 #### 构建项目文件目录
@@ -105,6 +96,7 @@ npm install --save react react-dom
 ├── package.json
 └── webpack.config.js
 ```
+
 ### 创建Babel配置文件
 文件名：.babelrc
 
@@ -151,7 +143,7 @@ var config = {
   },
   devServer: {
     hot: true,
-    contentBase: './build',//本地服务器所加载的页面所在的目录
+    contentBase: false,//本地服务器所加载的页面所在的目录
     historyApiFallback: true,//不跳转
     inline: true//实时刷新
   },
@@ -180,7 +172,18 @@ var config = {
           options: { plugins: [require('autoprefixer')] }
         }]
       }, {
-        test: /\.hbs?$/, use: [{ loader: 'mustache-loader' }]
+        test: /\.hbs?$/,
+        use: [{ loader: 'mustache-loader' }]
+      }, {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+            }
+          }
+        ]
       }
     ]
   },
