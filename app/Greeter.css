@@ -3,7 +3,7 @@
     padding: 10px;
     border: 3px solid #6298aa;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }

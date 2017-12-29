@@ -40,7 +40,18 @@ var config = {
           options: { plugins: [require('autoprefixer')] }
         }]
       }, {
-        test: /\.hbs?$/, use: [{ loader: 'mustache-loader' }]
+        test: /\.hbs?$/,
+        use: [{ loader: 'mustache-loader' }]
+      }, {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+            }
+          }
+        ]
       }
     ]
   },
