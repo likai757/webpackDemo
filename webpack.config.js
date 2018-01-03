@@ -18,14 +18,14 @@ var config = {
   module: {
     rules: [
       {
-        test: /(\.jsx|\.js)$/,
+        test: /\.(jsx|js)$/,
         use: {
           loader: 'babel-loader',
           options: { presets: ['env', 'react'] }
         },
         exclude: /node_modules/
       }, {
-        test: /\.css$/,
+        test: /\.(less|css)$/,
         use: [{
           loader: 'style-loader'
         }, {
@@ -38,6 +38,8 @@ var config = {
         }, {
           loader: 'postcss-loader',
           options: { plugins: [require('autoprefixer')] }
+        }, {
+          loader: 'less-loader' // compiles Less to CSS
         }]
       }, {
         test: /\.hbs?$/,
