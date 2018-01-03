@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const htmlWebpackPlugin = require('html-webpack-plugin')
 const copyWebpackPlugin = require('copy-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 var config = {
   // devtool: 'cheap-module-source-map',
@@ -26,21 +27,24 @@ var config = {
         exclude: /node_modules/
       }, {
         test: /\.(less|css)$/,
-        use: [{
-          loader: 'style-loader'
-        }, {
-          loader: 'css-loader', options: {
-            // 指定启用css modules
-            modules: true,
-            // 指定css的类名格式
-            localIdentName: '[name]__[local]--[hash:base64:5]'
-          }
-        }, {
-          loader: 'postcss-loader',
-          options: { plugins: [require('autoprefixer')] }
-        }, {
-          loader: 'less-loader' // compiles Less to CSS
-        }]
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader', options: {
+                // 指定启用css modules
+                modules: true,
+                // 指定css的类名格式
+                localIdentName: '[name]__[local]--[hash:base64:5]'
+              }
+            }, {
+              loader: 'postcss-loader',
+              options: { plugins: [require('autoprefixer')] }
+            }, {
+              loader: 'less-loader' // compiles Less to CSS
+            }
+          ]
+        })
       }, {
         test: /\.hbs?$/,
         use: [{ loader: 'mustache-loader' }]
@@ -66,7 +70,12 @@ var config = {
       template: __dirname + '/assets/index.hbs',
       favicon: __dirname + '/assets/favicon.ico'
     }),
-    new copyWebpackPlugin([{ from: 'assets/introduce.html' }])
+    new copyWebpackPlugin([{ from: 'assets/introduce.html' }]),
+    new ExtractTextPlugin({
+      filename: '[name]-[chunkhash].css',
+      disable: process.env.NODE_ENV === 'development',
+      allChunks: true
+    })
   ]
 }
 
