@@ -3,6 +3,35 @@ const htmlWebpackPlugin = require('html-webpack-plugin')
 const copyWebpackPlugin = require('copy-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+const extractCSS = (isModule) => {
+  let cssLoader = {
+    loader: 'css-loader'
+  }
+  if (isModule) {
+    cssLoader.options = {
+      modules: true,
+      localIdentName: '[name]__[local]--[hash:base64:5]'
+    }
+  }
+  let postCssLoader = {
+    loader: 'postcss-loader',
+    options: {
+      plugins: [
+        require('autoprefixer'),
+        require('cssnano')
+      ]
+    }
+  }
+  return ExtractTextPlugin.extract({
+    fallback: 'style-loader',
+    use: [
+      cssLoader,
+      postCssLoader,
+      { loader: 'less-loader' }
+    ]
+  })
+}
+
 var config = {
   // devtool: 'cheap-module-source-map',
   entry: __dirname + '/app/index.js',//已多次提及的唯一入口文件
@@ -26,26 +55,15 @@ var config = {
         },
         exclude: /node_modules/
       }, {
-        test: /\.(less|css)$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader', options: {
-                // 指定启用css modules
-                modules: true,
-                // 指定css的类名格式
-                localIdentName: '[name]__[local]--[hash:base64:5]'
-              }
-            }, {
-              loader: 'postcss-loader',
-              options: { plugins: [require('autoprefixer')] }
-            }, {
-              loader: 'less-loader' // compiles Less to CSS
-            }
-          ]
-        })
+        test(filePath) {
+          return /\.less$/.test(filePath) && !/\.m\.less$/.test(filePath)
+        },
+        use: extractCSS()
       }, {
+        test: /\.m\.less$/,
+        use: extractCSS(true)
+      },
+      {
         test: /\.hbs?$/,
         use: [{ loader: 'mustache-loader' }]
       }, {

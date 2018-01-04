@@ -4,6 +4,6 @@
 import React from 'react'
 import { render } from 'react-dom'
 import Greeter from './Greeter'
-import './main.css'
+import './styles/app.less'
 
 render(<Greeter/>, document.getElementById('app'))
